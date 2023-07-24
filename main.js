@@ -13,10 +13,10 @@ window.addEventListener('DOMContentLoaded', (event) => {
             let value = input.value;
             // The value you search for is in the object keys
             if(value && data[value]){
-                result.textContent = data[value];
+                result.innerHTML = `<p>${data[value]}</p>`;
                 suggestWords(data, value);
             } else {
-                result.textContent = '';
+                result.innerHTML = '';
                 clearSuggestions();
             }
         });
@@ -24,7 +24,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         randomBtn.addEventListener('click', function(){
             let keys = Object.keys(data);
             let randomWord = keys[Math.floor(Math.random() * keys.length)];
-            result.textContent = data[randomWord];
+            result.innerHTML = `<p>${data[randomWord]}</p>`;
             suggestWords(data, randomWord);
         });
 
