@@ -1,25 +1,49 @@
-let words = [];
-
-fetch('words.json')
+window.addEventListener('DOMContentLoaded', (event) => {
+    // We include the fetch API which returns a Promise
+    fetch('./words.json')
     .then(response => response.json())
-    .then(data => words = data)
-    .catch(error => console.error('Error:', error));
+    .then(data => {
+        // Attach event listener to input
+        let input = document.getElementById('search');
+        let result = document.getElementById('result');
+        let searchBtn = document.getElementById('search-btn');
+        let randomBtn = document.getElementById('random-btn');
 
-document.getElementById('search-form').addEventListener('submit', function(event) {
-    event.preventDefault();
-    const searchWord = document.getElementById('search-input').value.toLowerCase();
-    const resultElement = document.getElementById('results');
-    const foundWord = words.find(word => word.word === searchWord);
+        searchBtn.addEventListener('click', function(){
+            let value = input.value;
+            // The value you search for is in the object keys
+            if(value && data[value]){
+                result.textContent = data[value];
+                suggestWords(data, value);
+            } else {
+                result.textContent = '';
+                clearSuggestions();
+            }
+        });
 
-    if (foundWord) {
-        resultElement.innerText = "Word: " + foundWord.word + "\nDefinition: " + foundWord.definition;
-    } else {
-        resultElement.innerText = "Word not found.";
-    }
-});
+        randomBtn.addEventListener('click', function(){
+            let keys = Object.keys(data);
+            let randomWord = keys[Math.floor(Math.random() * keys.length)];
+            result.textContent = data[randomWord];
+            suggestWords(data, randomWord);
+        });
 
-document.getElementById('random-btn').addEventListener('click', function() {
-    const randomIndex = Math.floor(Math.random() * words.length);
-    const word = words[randomIndex];
-    document.getElementById('results').innerText = "Random Word: " + word.word + "\nDefinition: " + word.definition;
+        function suggestWords(data, value) {
+            let suggestedWordsContainer = document.getElementById('suggested-words');
+            clearSuggestions();
+            let suggestedWordsArray = Object.keys(data).filter(word => word !== value && word.includes(value));
+            suggestedWordsArray.slice(0, 5).forEach((word) => {
+                let li = document.createElement('li');
+                li.textContent = word;
+                suggestedWordsContainer.appendChild(li);
+            });
+        }
+
+        function clearSuggestions() {
+            let suggestedWordsContainer = document.getElementById('suggested-words');
+            while (suggestedWordsContainer.firstChild) {
+                suggestedWordsContainer.removeChild(suggestedWordsContainer.firstChild);
+            }
+        }
+    });
 });

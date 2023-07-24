@@ -1,15 +1,21 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <link rel="stylesheet" type="text/css" href="styles.css">
-</head>
-<body>
-    <form id="search-form">
-        <input type="text" id="search-input" placeholder="Search Here">
-        <input type="submit" value="Search">
-    </form>
-    <p id="results"></p>
-    <button id="random-btn">Random Word</button>
-    <script src="main.js"></script>
-</body>
+    <head>
+        <title>我的字典</title>
+        <link rel="stylesheet" type="text/css" href="styles.css">
+    </head>
+    <body>
+        <h1>我的字典</h1>
+        <input type="text" id="search" placeholder="寻找词语...">
+        <button id="search-btn">搜索</button>
+        <button id="random-btn">随机单词</button>
+        <div id="result"></div>
+        <section id="suggested">
+            <h3>你可能感兴趣的：</h3>
+            <ul id="suggested-words">
+                <!-- Suggested words will be inserted here -->
+            </ul>
+        </section>
+        <script src="main.js"></script>
+    </body>
 </html>
