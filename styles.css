@@ -1,0 +1,17 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+#search-form {
+    margin-bottom: 1em;
+    display: flex;
+    align-items: center;
+}
+
+#search-input {
+    margin-right: 1em;
+}
+
+#random-btn {
+    margin-top: 1em;
+}
